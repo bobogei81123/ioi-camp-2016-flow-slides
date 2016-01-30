@@ -1,0 +1,63 @@
+\documentclass[tikz, border=5pt, convert={outext=.svg, density=500x500}]{standalone}
+\begin{document}
+\input{global.tex}
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm]
+  \node[source](s) at (0, 0) {$s$};
+  \node[sink](t) at (0, 4) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1.4/1.2/$v_2$/v2,
+    1.8/1.5/$v_3$/v3,
+    0.3/1.9/$v_4$/v4,
+    1.9/3.1/$v_5$/v5,
+    -1.4/3.0/$v_6$/v6%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\style in {
+      s/v2/4/{sloped, above},
+      s/v4/6/{left},
+      s/v3/1/{sloped, above},
+      s/v5/3/{left, pos=.8},
+      v2/v4/2/{sloped, below},
+      v2/v6/2/{left},
+      v6/t/3/{sloped, above,pos=.4},
+      v4/t/5/{left, pos=.4},
+      v5/t/4/{sloped, above,pos=.4},
+      v3/v5/4/{right}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] node{\f} (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm]
+  \node[source](s) at (0, 0) {$s$};
+  \node[sink](t) at (0, 4) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1.4/1.2/$v_2$/v2,
+    1.8/1.5/$v_3$/v3,
+    0.3/1.9/$v_4$/v4,
+    1.9/3.1/$v_5$/v5,
+    -1.4/3.0/$v_6$/v6%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {%
+      s/v2/4/3/{sloped, above},
+      s/v4/6/4/{left},
+      s/v3/1/1/{sloped, above},
+      s/v5/3/3/{left, pos=.8},
+      v2/v4/2/1/{sloped, below},
+      v2/v6/2/2/{left},
+      v6/t/3/2/{sloped, above,pos=.4},
+      v4/t/5/5/{left, pos=.4},
+      v5/t/4/4/{sloped, above,pos=.4},
+      v3/v5/4/1/{right}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] 
+      node{{\bf\ff}{\footnotesize/\f}} (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+\end{document}

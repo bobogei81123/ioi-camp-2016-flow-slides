@@ -1,0 +1,110 @@
+\documentclass[tikz, border=5pt, convert={outext=.svg, density=500x500}]{standalone}
+\begin{document}
+\input{global.tex}
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm]
+  \node[source](s) at (0, 0) {$s$};
+  \node[source](t) at (0, 3) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1/1.5/$v_2$/v2,
+    1/1.5/$v_3$/v3%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {
+      s/v2/1/{\color{green}1}/{above left},
+      v2/v3/1/{\color{green}1}/{above},
+      s/v3/1/0/{above right},
+      v2/t/1/0/{below left},
+      v3/t/1/{\color{green}1}/{below right}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] 
+      node{\f} (\v);
+    }
+  \end{scope} 
+\end{tikzpicture}
+% 1:
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm]
+  \node[source](s) at (0, 0) {$s$};
+  \node[source](t) at (0, 3) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1/1.5/$v_2$/v2,
+    1/1.5/$v_3$/v3%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {
+      s/v2/1/{\color{green}1}/{above left},
+      v2/v3/1/{\color{green}1}/{above},
+      s/v3/1/0/{above right},
+      v2/t/1/0/{below left},
+      v3/t/1/{\color{green}1}/{below right}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] 
+      node{{\large\bf\ff}{\color{white} \footnotesize/\f}} (\v);
+    }
+  \end{scope} 
+\end{tikzpicture}
+% 2:
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm, go/.append style={green, line width=0.7mm}]
+  \node[source](s) at (0, 0) {$s$};
+  \node[source](t) at (0, 3) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1/1.5/$v_2$/v2,
+    1/1.5/$v_3$/v3%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {
+      s/v3/1/0/{above right},
+      v2/t/1/0/{below left}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] (\v);
+    }
+  \end{scope} 
+\end{tikzpicture}
+% 3:
+\begin{tikzpicture}[x=2cm,y=-2cm, go/.append style={green, line width=0.7mm}]
+  \node[source](s) at (0, 0) {$s$};
+  \node[sink](t) at (3, 0) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    1/0/$v_2$/v2,
+    2/0/$v_6$/v6%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {%
+      s/v2/4/0/{go, above},
+      v2/v6/2/0/{go, above},
+      v6/t/3/0/{go, above}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] 
+      node{{\bf\ff}{\footnotesize/\f}} (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+% 4:
+\begin{tikzpicture}[x=2cm,y=-2cm, go/.append style={green, line width=0.7mm}]
+  \node[source](s) at (0, 0) {$s$};
+  \node[sink](t) at (3, 0) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    1/0/$v_2$/v2,
+    2/0/$v_6$/v6%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {%
+      s/v2/4/2/{go, above},
+      v2/v6/2/2/{go, above, yellow, dashed},
+      v6/t/3/2/{go, above}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] 
+      node{{\bf\ff}{\footnotesize/\f}} (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+\end{document}

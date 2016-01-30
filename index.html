@@ -1,0 +1,74 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>IOI-Camp Flow</title><meta name="description" content="A framework for easily creating beautiful presentations using HTML"><meta name="author" content="Hakim El Hattab"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"><link rel="stylesheet" href="reveal/css/reveal.css"><link rel="stylesheet" href="reveal/css/theme/black.css" id="theme"><link rel="stylesheet" href="css/style.css"><!-- Code syntax highlighting -->
+<link rel="stylesheet" href="reveal/lib/css/zenburn.css">
+<!-- Printing and PDF exports --><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal/css/print/pdf.css' : 'reveal/css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script><!--[if lt IE 9]><script src="lib/js/html5shiv.js"></script><![endif]--></head><body><div></div><div class="reveal"><div class="slides">\( 
+  \newcommand{\ord}[1]{\mathcal{O}\left(#1\right)}
+  \newcommand{\abs}[1]{\lvert #1 \rvert}
+  \newcommand{\floor}[1]{\lfloor #1 \rfloor}
+  \newcommand{\ceil}[1]{\lceil #1 \rceil}
+  \newcommand{\opord}{\operatorname{\mathcal{O}}}
+  \newcommand{\argmax}{\operatorname{arg\,max}}
+  \newcommand{\str}[1]{\texttt{"#1"}}
+\)<section><h1>Flow</h1><p><div class="small">Created by Meteor</div></p></section><section><!DOCTYPE html><section data-markdown><script type="text/template">## 大綱
+* 流的定義
+* 最大流演算法
+  - FF
+  - EK
+  - Dinic
+* 最大流問題建模
+* 最小割問題建模
+* 最小花費最大流演算法
+* 最小花費最大流建模
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 如果有時間的話
+* Misc
+* 線性規劃
+* 趣題選講
+</script></section><!DOCTYPE html><section><h2>圖論關鍵</h2><ul><li class="fragment">知識 - 多記結論</li><li class="fragment">應變 - 臨場發揮</li><li class="fragment">拿紙出來用力畫啊</li></ul></section></section><section><!DOCTYPE html><section><h1>Maximum Flow</h1></section></section><section><!DOCTYPE html><section><h1>Definition</h1></section><!DOCTYPE html><section><h2>可行流</h2><p>想像一下…</p><ul><li class="fragment">有水流通過的水管</li><li class="fragment">公路的車流</li><li class="fragment">網路</li></ul></section><!DOCTYPE html><section><p>這些東西都有這些特性</p><ul><li class="fragment">有流的上限</li><li class="fragment">不能囤積</li><li class="fragment">通常會有起點和終點。</li><li class="fragment">而我們會希望能傳輸越多越好！</li></ul></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div>流量網路<hr/>一個<b>s-t 網路流</b>是<ul><li class="fragment">一張圖 \( G = (V, E) \)</li><li class="fragment">每條邊上有一個非負的權重 \( c(u, v) \geq 0 \) 代表邊的流量上限 </li><li class="fragment">並且有二個特別的點， 源點 \( s \) 與 匯點 \( t \) 。</li></ul></div></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div>可行流的定義<hr/>一個<b> s-t 可行流</b>是一個函數 \( f : V \times V \mapsto \mathbb{R} \) 滿足以下兩個條件<ul><br><li class="fragment">流量限制 : 
+\( f(u, v) \leq c(u, v), \; \forall (u, v) \)<br><br></li><li class="fragment">流量對稱 : 
+\( f(u, v) = -f(v, u), \; \forall (u, v)\)<br><br></li><li class="fragment">流量守衡 : 
+對於所有 \( v \in V \setminus \{s, t\} \) ， 
+有 \(  \sum\limits_{u \in V} f(v, u) = 0  \)</li></ul><p class="fragment">而我們定義這個 s-t 流的<b>流量</b>為 \( \abs{f} = \sum_{v \in V} f(s, v) \)</p></div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-0.svg" class="x2"></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-1.svg" class="x2"></section></section><section><!DOCTYPE html><section><h1>Algorithm</h1></section><!DOCTYPE html><section><h2>Want</h2><p>流量最大的一個流，也就是最大流！</p></section><!DOCTYPE html><section><h3>想法</h3><p>一點一點慢慢增加流量</p></section><!DOCTYPE html><section><img src="img/latex/flow1-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow1-1.svg" class="fragment"></section><!DOCTYPE html><section><p>問：可以增加多少流量？</p><img width="80%" src="img/latex/flow1-2.svg"><img width="80%" src="img/latex/flow1-3.svg" class="fragment"></section><!DOCTYPE html><section><img src="img/latex/flow2-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow2-1.svg" class="fragment"></section><!DOCTYPE html><section><p>直到有一天流不了。</p><img src="img/latex/flow3-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow3-1.svg" class="fragment"></section><!DOCTYPE html><section><p>Question: 這樣是否就是一個最大流？</p><p class="fragment">Answer: No!</p></section><!DOCTYPE html><section><img src="img/latex/flowzz-0.svg" class="x3 space-right"><img src="img/latex/flowzz-1.svg" class="x3 fragment space-right"><img src="img/latex/flowzz-2.svg" class="x3 fragment"></section><!DOCTYPE html><section><h3>再仔細觀察！</h3><p>還記得<br>流量對稱 : 
+\( f(u, v) = -f(v, u), \; \forall (u, v)\)</p></section><!DOCTYPE html><section></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div>可行流的定義<hr/>一個<b> s-t 可行流</b>是一個函數 \( f : V \times V \mapsto \mathbb{R} \) 滿足以下兩個條件<ul><br><li class="fragment">流量限制 : 
+\( f(u, v) \leq c(u, v), \; \forall (u, v) \)<br><br></li><li class="fragment">流量對稱 : 
+\( f(u, v) = -f(v, u), \; \forall (u, v)\)<br><br></li><li class="fragment">流量守衡 : 
+對於所有 \( v \in V \setminus \{s, t\} \) ， 
+有 \(  \sum\limits_{u \in V} f(v, u) = 0  \)</li></ul><p class="fragment">而我們定義這個 s-t 流的<b>流量</b>為 \( \abs{f} = \sum_{v \in V} f(s, v) \)</p></div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-0.svg" class="x2"></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-1.svg" class="x2"></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
+  //-showNotes: true,
+
+  transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+  // Optional reveal.js plugins
+  dependencies: [
+    { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
+    { src: 'reveal/plugin/notes/notes.js', async: true },
+    { src: 'reveal/plugin/math/math.js', async: true, callback: function() {
+      setTimeout( function() {
+        MathJax.Hub.Config({
+          SVG: {
+            scale: 90
+            },
+          "HTML-CSS": {
+            scale: 90,
+            }
+          });
+        }, 2000);
+      },
+      config: 'TeX-AMS_HTML-full'
+    },
+    { src: 'js/dazzleSketch.js', async: true }
+  ]
+});</script></body></html>
