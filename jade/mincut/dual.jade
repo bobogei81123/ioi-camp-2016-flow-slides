@@ -1,0 +1,94 @@
+
+section
+  +slide
+    h1 Duality
+
+  +slide
+    h2 對偶問題
+
+    p 問題常常是一體兩面
+      br
+      | 某個求最大值的問題常常等價於另一個求最小值的問題
+    ul
+      li.fragment 「你會的問題裡最難的一個」差不多就是
+        br
+        | 「你不會的問題裡最簡單的一個」
+      li.fragment 「最多可以放多少隻蘿莉在 瀚x 旁邊他還能保持理智」
+        | 其實就是在問「要陷害 x瀚 去坐牢要擺幾隻蘿莉？」
+      li.fragment 「給你 1000 元你最多可以活多久」跟
+        br
+        | 「你要活一個月至少需要多少錢？」差不多。
+
+  +slide
+    p 那最大流的對偶是什麼呢？
+    p 想像一下…
+
+  +slide
+    p 一個網路的最大流，就是那些被 <br> 「堵住」的水管的淨流量。
+    p 這些堵住的水管會把點分成兩群。
+
+  +slide
+    h2 割的定義
+    +theorem({name: ''})
+      | 一個 
+      b s-t cut 
+      | \( C \) 是一個圖的分割，將圖中的點分成兩個集合 \( C = (S, T) \)，
+      | 滿足 \( s \in S, \; t \in T \)。我們定義這個割的大小為
+      br
+      br
+      | \[ \abs{C} = \sum_{u \in S} \sum_{v \in T} c(u, v). \]
+      br
+      | 也就是所有滿足 \( u \) 在 \( S \)，\( v \) 在 \( T \) 的邊 \( (u, v) \) 的流量上限和。
+      br
+      | (並不計算 \( u \) 在 \( T \) ， \( v \) 在 \( S \) 的邊。)
+      br
+      | 一個 
+      b  最小割
+      |  就是最小的一個割。
+
+  +slide
+    p 而最大流的對偶問題正是最小割。
+
+  +slide
+    h3 Example
+
+    img.x2.space-right(src="img/mincut/f1-0.svg")
+    img(width="43.2%" src="img/mincut/f1-1.svg")
+
+  +slide
+    +theorem({name: "Max-flow min-cut theorem"})
+      | 對一個流量網路 $G$，以下三件事情是等價的。
+      ul
+        li \( f \) 是一個 s-t 最大流。
+        li 關於 \( f \) 的剩餘網路 \( G_f \) 沒有從 \( s \) 到 \( t \) 的擴充路徑。
+        li \( \abs{f} = \abs{C} \)，其中 \( C \) 是最小 s-t 割。
+
+    p (1) \( \implies \) (2) 前面講過。
+
+  +slide
+    h3 截流引理
+    +theorem({name: ''})
+      | 對於一個流量 \( f \)，定義一個 s-t cut \( (S, T) \) 的截流為
+      br
+      br
+      | \[ \abs{f(S, T)} = \sum_{u \in S, v \in T} f(u, v) \]
+      br
+      | 則 \( \abs{f(S, T)} = \abs{f} \) 。
+    .blackboard
+
+  +slide
+    h3 (2) \( \implies \) (3)
+    p.fragment 找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
+      | 其他點就是 \( T \)。
+
+  +slide
+    h3 (3) \( \implies \) (1)
+    p.fragment 找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
+      | 其他點就是 \( T \)。
+
+  +slide
+    h2 Find a min-cut
+    p 這個引理也告訴了我們，找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
+      | 其他點就為 \( T \)，就恰好是一個 s-t cut。
+
+

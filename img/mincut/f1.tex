@@ -1,0 +1,78 @@
+\documentclass[tikz, border=5pt, convert={outext=.svg, density=500x500}]{standalone}
+\usepackage{amsmath}
+\begin{document}
+\input{../global.tex}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm]
+  \node at (-1.5, -0.2) {$\abs{f} = 11$};
+  \node[source](s) at (0, 0) {$s$};
+  \node[sink](t) at (0, 4) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1.4/1.2/$v_2$/v2,
+    1.8/1.5/$v_3$/v3,
+    0.3/1.9/$v_4$/v4,
+    1.9/3.1/$v_5$/v5,
+    -1.4/3.0/$v_6$/v6%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v/\f/\ff/\style in {
+      s/v2/4/3/{sloped, above},
+      s/v4/6/4/{left},
+      s/v3/1/1/{sloped, above},
+      s/v5/3/3/{left, pos=.8},
+      v2/v4/2/1/{sloped, below},
+      v2/v6/2/2/{left},
+      v6/t/3/2/{sloped, above,pos=.4},
+      v4/t/5/5/{left, pos=.4},
+      v5/t/4/4/{sloped, above,pos=.4},
+      v3/v5/4/1/{right}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] 
+      node{{\bf\ff}{\footnotesize/\f}} (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm ,
+  source/.style={vertex, fill=red!30!black},
+  sink/.style={vertex, fill=blue!30!black}]%, pattern=north west lines, pattern color=gray}]
+  \node at (-1.5, -0.2) {$\abs{C} = 11$};
+  \node[source, double=red!30!black, double distance=2pt](s) at (0, 0) {$s$};
+  \node[sink, double=blue!30!black, double distance=2pt](t) at (0, 4) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    -1.4/1.2/$v_2$/v2,
+    0.3/1.9/$v_4$/v4%
+  } {
+    \node[source] (\lab) at (\x, \y) {\name};
+  }
+  \foreach \x/\y/\name/\lab in {
+    1.8/1.5/$v_3$/v3,
+    1.9/3.1/$v_5$/v5,
+    -1.4/3.0/$v_6$/v6%
+  } {
+    \node[sink] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}, heavy/.style={line width=0.8mm, green}]
+    \foreach \u/\v/\f/\style in {
+      s/v2/4/{sloped, above},
+      s/v4/6/{left},
+      v2/v4/2/{sloped, below},
+      v6/t/3/{sloped, above,pos=.4},
+      v5/t/4/{sloped, above,pos=.4},
+      v3/v5/4/{right}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] node{\f} (\v);
+    }
+    \foreach \u/\v/\f/\style in {
+      s/v3/1/{sloped, above, heavy},
+      s/v5/3/{left, pos=.8, heavy},
+      v2/v6/2/{left, heavy},
+      v4/t/5/{left, pos=.4, heavy}%
+    }{
+      \draw[fed] (\u) edge[apply style/.expand once=\style] node{\Large\color{yellow} \bf \f} (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+\end{document}
