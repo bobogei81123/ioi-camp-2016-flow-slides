@@ -11,17 +11,13 @@ section
     p.fragment 一次把所有長度是 \( k \) 的擴充路徑都擴充完。
 
   +slide
-    p 只差在 Edmonds-Karp 每次規定找最短的一條擴充路徑。
-    p.fragment 差多少呢？
-    p.fragment 差非常多！ 複雜度變成 \( \ord{V E^2} \)
-      br
-      | 不但跟流量大小無關，無理數也會 work ！
-
-  +slide
     h3 Details
     .blackboard
+
+    +n 畫分層圖
 
   +slide
     h3 複雜度
     p 每次 \( \ord{k E} \)，總共 \( \ord{V^2 E} \)。
 
+    +n 一次 sum deg() 
