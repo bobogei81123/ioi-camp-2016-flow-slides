@@ -4,67 +4,58 @@ section
     h1 Definition
 
   +slide
-    h2 割的定義
+    h2 最小花費最大流的定義
+
+    p 和最大流時一樣，我們要求一個流量最大的流。
+    p 但現在每個邊除了有流量上限以外，還有一個價格 \( k(u, v) \)，
+      | 表示每單位流過要付多少錢。
+    p 最後總花費是
+      | \[ k(f) = \sum_{f(u, v) > 0} k(u, v) \cdot f(u, v) \]
+
+  +slide
+    p 如何修改前面的使得可以找一個最小花費的最大流？
+    p 我們先想剩餘網路要怎麼做修改。
+    p 流量應該不變。
+    p 那剩餘網路的花費 \( k_{f} (u, v) \) 如何設？
+
+  +slide
+    p 如果在原圖有一條有向邊 \( u \to v \) ， Cost 為 \( k(u, v) \)。
+    ul
+      li.fragment 順流： 在剩餘網路上流一單位，表示在原來的流上增加一單位。
+        | \[ \implies k_f(u, v) = k(u, v) \]
+      li.fragment 逆流： 在剩餘網路上反著流一單位，表示在原來的流上減少一單位。
+        | \[ \implies k_f(v, u) = -k(v, u) \]
+
+  +slide
     +theorem({name: ''})
-      | 一個 
-      b s-t cut 
-      | \( C \) 是一個圖的分割，將圖中的點分成兩個集合 \( C = (S, T) \)，
-      | 滿足 \( s \in S, \; t \in T \)。我們定義這個割的大小為
-      br
-      br
-      | \[ \abs{C} = \sum_{u \in S} \sum_{v \in T} c(u, v). \]
-      br
-      | 也就是所有滿足 \( u \) 在 \( S \)，\( v \) 在 \( T \) 的邊 \( (u, v) \) 的流量上限和。
-      br
-      | (並不計算 \( u \) 在 \( T \) ， \( v \) 在 \( S \) 的邊。)
-      br
-      | 一個 
-      b  最小割
-      |  就是最小的一個割。
-
-  +slide
-    p 而最大流的對偶問題正是最小割。
-
-  +slide
-    h3 Example
-
-    img.x2.space-right(src="img/mincut/f1-0.svg")
-    img(width="43.2%" src="img/mincut/f1-1.svg")
-
-  +slide
-    +theorem({name: "Max-flow min-cut theorem"})
-      | 對一個流量網路 $G$，以下三件事情是等價的。
-      ul
-        li \( f \) 是一個 s-t 最大流。
-        li 關於 \( f \) 的剩餘網路 \( G_f \) 沒有從 \( s \) 到 \( t \) 的擴充路徑。
-        li \( \abs{f} = \abs{C} \)，其中 \( C \) 是最小 s-t 割。
-
-    p (1) \( \implies \) (2) 前面講過。
-
-  +slide
-    h3 截流引理
-    +theorem({name: ''})
-      | 對於一個流量 \( f \)，定義一個 s-t cut \( (S, T) \) 的截流為
-      br
-      br
-      | \[ \abs{f(S, T)} = \sum_{u \in S, v \in T} f(u, v) \]
-      br
-      | 則 \( \abs{f(S, T)} = \abs{f} \) 。
+      | 一個最大流 \( f \) 是一個最小花費最大流若且唯若其剩餘網路上沒有
+      b 負環
+      | ，也就是花費為負的環。
     .blackboard
 
   +slide
-    h3 (2) \( \implies \) (3)
-    p.fragment 找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
-      | 其他點就是 \( T \)。
+    +theorem({name: ''}).
+      如果在剩餘網路上沒有負環，現在我們找一個花費最小的路徑擴充，則擴充後
+      剩餘網路上還是不會有負環。
+    .blackboard
 
   +slide
-    h3 (3) \( \implies \) (1)
-    p.fragment 找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
-      | 其他點就是 \( T \)。
+    p 由這兩個引理我們可以知道只要每次都找最短路擴充，直到最大流即可。
+    p.fragment 只是現在「最短路」並非邊數最少的路徑，而是花費總合最少的路徑！ 
 
   +slide
-    h2 Find a min-cut
-    p 這個引理也告訴了我們，找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
-      | 其他點就為 \( T \)，就恰好是一個 s-t cut。
+    h3 Psuedo Code
+    pre
+      code.cpp.
+        int f = 0
+        while (tf = find_mincost_path()) {
+            f += tf;
+        }
+        return f;
+
+  +slide
+    h2 Finding min-cost path
+    p 可以用任何能處理負邊的演算法，如 SPFA。
+    p 總複雜度是 \( \ord{SP \cdot \abs{F}} \)。
 
 
