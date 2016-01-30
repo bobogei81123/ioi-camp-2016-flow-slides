@@ -1,0 +1,42 @@
+\documentclass[tikz, border=5pt, convert={outext=.svg, density=500x500}]{standalone}
+\begin{document}
+\input{../global.tex}
+\begin{tikzpicture}[x=1.2cm,y=-1.2cm]
+  \node[source] (s) at (1.5, -1) {$s$};
+  \node[sink] (t) at (1.5, 2.5) {$t$};
+  \foreach \x/\y/\name/\lab in {
+    0/0/$v_1$/v1,
+    1/0/$v_2$/v2,
+    2/0/$v_3$/v3,
+    3/0/$v_4$/v4,
+    0/1.5/$u_1$/u1,
+    1/1.5/$u_2$/u2,
+    2/1.5/$u_3$/u3,
+    3/1.5/$u_4$/u4%
+  } {
+    \node[vertex] (\lab) at (\x, \y) {\name};
+  }
+  \begin{scope}[every edge/.append style={pos=.5}]
+    \foreach \u/\v in {
+      v1/u1,
+      v1/u2,
+      v1/u3,
+      v2/u1,
+      v2/u2,
+      v3/u2,
+      v3/u4,
+      v4/u3,
+      s/v1,
+      s/v2,
+      s/v3,
+      s/v4,
+      u1/t,
+      u2/t,
+      u3/t,
+      u4/t%
+    }{
+      \draw[fed] (\u) edge (\v);
+    }
+  \end{scope}
+\end{tikzpicture}
+\end{document}

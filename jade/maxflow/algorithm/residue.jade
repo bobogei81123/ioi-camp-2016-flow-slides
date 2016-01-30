@@ -1,0 +1,54 @@
+
+section
+  +slide
+    h2 Residual Network 
+    +theorem({name: ''})
+      | 一個邊的
+      b 剩餘流量 
+      | \( r(u, v) \) 定義為
+      br 
+      br
+      | \[ r(u, v) = c(u, v) - f(u, v) \]
+      br
+      | 如果 \( r(u, v) > 0 \) ，則可以沿著這些邊擴充流量，因此 \( r(u, v) > 0 \) 
+      | 的所有邊構成的圖就稱作 
+      b 剩餘網路
+      | ，對於一個流 \( f \) 記作 \( G_f \)。
+
+  +slide
+    img.x2.space-right(src="img/res/f1-0.svg")
+    img(width="40%" src="img/res/f1-1.svg")
+
+  +slide
+    p 在剩餘網路上不斷找路增加流量！
+    
+    .fragment
+      +theorem({name: "擴充路徑"})
+        p 假設找到了一條路徑 \( P = s \to v_1 \to v_2 \to \cdots \to v_n \to t \)。 
+        ul 
+          li 可增加的最大流量就是路徑上剩餘流量的最小值。
+          | \[ \Delta f = \min\limits_{e \in P} r(e). \]
+
+          li. 
+            一條邊 \( (u, v) \) 如果增加了流量 \( \Delta f \)，則 
+            \[ \begin{align*}
+            f(u, v) \gets f(u, v) + \Delta f, \quad r(u, v) \gets r(u, v) - \Delta f \\
+            f(v, u) \gets f(v, u) - \Delta f, \quad r(v, u) \gets r(v, u) + \Delta f \\
+            \end{align*} \]
+
+  +mdslide.
+    ## 邊的存法
+
+    \\( f, c, r \\) 知其二則剩下一個也可以推出。
+
+    其實可能只要記 \\( r \\) 就好。
+
+  +mdslide.
+    ## 結論
+
+    不斷的找路徑擴充流量，直到剩餘網路沒有  
+    \\( s \leadsto t \\) 的路徑，就是最大流！
+
+  
+      
+

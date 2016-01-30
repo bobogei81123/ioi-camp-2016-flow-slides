@@ -31,12 +31,175 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 \( f(u, v) \leq c(u, v), \; \forall (u, v) \)<br><br></li><li class="fragment">流量對稱 : 
 \( f(u, v) = -f(v, u), \; \forall (u, v)\)<br><br></li><li class="fragment">流量守衡 : 
 對於所有 \( v \in V \setminus \{s, t\} \) ， 
-有 \(  \sum\limits_{u \in V} f(v, u) = 0  \)</li></ul><p class="fragment">而我們定義這個 s-t 流的<b>流量</b>為 \( \abs{f} = \sum_{v \in V} f(s, v) \)</p></div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-0.svg" class="x2"></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-1.svg" class="x2"></section></section><section><!DOCTYPE html><section><h1>Algorithm</h1></section><!DOCTYPE html><section><h2>Want</h2><p>流量最大的一個流，也就是最大流！</p></section><!DOCTYPE html><section><h3>想法</h3><p>一點一點慢慢增加流量</p></section><!DOCTYPE html><section><img src="img/latex/flow1-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow1-1.svg" class="fragment"></section><!DOCTYPE html><section><p>問：可以增加多少流量？</p><img width="80%" src="img/latex/flow1-2.svg"><img width="80%" src="img/latex/flow1-3.svg" class="fragment"></section><!DOCTYPE html><section><img src="img/latex/flow2-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow2-1.svg" class="fragment"></section><!DOCTYPE html><section><p>直到有一天流不了。</p><img src="img/latex/flow3-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow3-1.svg" class="fragment"></section><!DOCTYPE html><section><p>Question: 這樣是否就是一個最大流？</p><p class="fragment">Answer: No!</p></section><!DOCTYPE html><section><img src="img/latex/flowzz-0.svg" class="x3 space-right"><img src="img/latex/flowzz-1.svg" class="x3 fragment space-right"><img src="img/latex/flowzz-2.svg" class="x3 fragment"></section><!DOCTYPE html><section><h3>再仔細觀察！</h3><p>還記得<br>流量對稱 : 
-\( f(u, v) = -f(v, u), \; \forall (u, v)\)</p></section><!DOCTYPE html><section></section><!DOCTYPE html><section><div class="theorem"><div class="label">定理</div>可行流的定義<hr/>一個<b> s-t 可行流</b>是一個函數 \( f : V \times V \mapsto \mathbb{R} \) 滿足以下兩個條件<ul><br><li class="fragment">流量限制 : 
-\( f(u, v) \leq c(u, v), \; \forall (u, v) \)<br><br></li><li class="fragment">流量對稱 : 
-\( f(u, v) = -f(v, u), \; \forall (u, v)\)<br><br></li><li class="fragment">流量守衡 : 
-對於所有 \( v \in V \setminus \{s, t\} \) ， 
-有 \(  \sum\limits_{u \in V} f(v, u) = 0  \)</li></ul><p class="fragment">而我們定義這個 s-t 流的<b>流量</b>為 \( \abs{f} = \sum_{v \in V} f(s, v) \)</p></div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-0.svg" class="x2"></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-1.svg" class="x2"></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
+有 \(  \sum\limits_{u \in V} f(v, u) = 0  \)</li></ul><p class="fragment">而我們定義這個 s-t 流的<b>流量</b>為 \( \abs{f} = \sum_{v \in V} f(s, v) \)</p></div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-0.svg" class="x2"></section><!DOCTYPE html><section><h3>Example</h3><img src="img/latex/flow-0-1.svg" class="x2"></section></section><section><!DOCTYPE html><section><h1>Max-Flow Algorithm</h1></section></section><section><!DOCTYPE html><section><h2>Want</h2><p>流量最大的一個流，也就是最大流！</p></section><!DOCTYPE html><section><h3>想法</h3><p>一點一點慢慢增加流量</p></section><!DOCTYPE html><section><img src="img/latex/flow1-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow1-1.svg" class="fragment"></section><!DOCTYPE html><section><p>問：可以增加多少流量？</p><img width="80%" src="img/latex/flow1-2.svg"><img width="80%" src="img/latex/flow1-3.svg" class="fragment"></section><!DOCTYPE html><section><img src="img/latex/flow2-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow2-1.svg" class="fragment"></section><!DOCTYPE html><section><p>直到有一天流不了。</p><img src="img/latex/flow3-0.svg" class="x2 space-right"><img width="40%" src="img/latex/flow3-1.svg" class="fragment"></section><!DOCTYPE html><section><p>Question: 這樣是否就是一個最大流？</p><p class="fragment">Answer: No!</p></section><!DOCTYPE html><section><img src="img/latex/flowzz-0.svg" class="x3 space-right"><img src="img/latex/flowzz-1.svg" class="x3 fragment space-right"><img src="img/latex/flowzz-2.svg" class="x3 fragment"></section><!DOCTYPE html><section><h3>再仔細觀察！</h3><p>還記得<br>流量對稱 : 
+\( f(u, v) = -f(v, u), \; \forall (u, v)\)</p></section><!DOCTYPE html><section><img src="img/latex/flowrev-0.svg" class="x2 vertmid space-right"><img src="img/latex/flowrev-1.svg" class="x2 vertmid fragment"><p class="fragment">\( -3 < 0 \) ，可以流過去！</p></section><!DOCTYPE html><section><img width="26%" src="img/latex/flowhao-0.svg" class="vertmid space-right"><span class="vertmid space-right">\(+\)</span><img width="26%" src="img/latex/flowhao-1.svg" class="vertmid fragment space-right"><span class="vertmid space-right">\(=\)</span><img width="26%" src="img/latex/flowhao-2.svg" class="vertmid fragment"></section><!DOCTYPE html><section><p>Question: 考慮負向邊之後，是否就是一個最大流？</p><p class="fragment">Answer: Yes!</p></section></section><section><!DOCTYPE html><section><h2>Residual Network </h2><div class="theorem"><div class="label">定理</div><hr/>一個邊的<b>剩餘流量 </b>\( r(u, v) \) 定義為<br><br>\[ r(u, v) = c(u, v) - f(u, v) \]<br>如果 \( r(u, v) > 0 \) ，則可以沿著這些邊擴充流量，因此 \( r(u, v) > 0 \) 
+的所有邊構成的圖就稱作 <b>剩餘網路</b>，對於一個流 \( f \) 記作 \( G_f \)。</div></section><!DOCTYPE html><section><img src="img/res/f1-0.svg" class="x2 space-right"><img width="40%" src="img/res/f1-1.svg"></section><!DOCTYPE html><section><p>在剩餘網路上不斷找路增加流量！</p><div class="fragment"><div class="theorem"><div class="label">定理</div>擴充路徑<hr/><p>假設找到了一條路徑 \( P = s \to v_1 \to v_2 \to \cdots \to v_n \to t \)。 </p><ul> <li>可增加的最大流量就是路徑上剩餘流量的最小值。</li>\[ \Delta f = \min\limits_{e \in P} r(e). \]<li>一條邊 \( (u, v) \) 如果增加了流量 \( \Delta f \)，則 
+\[ \begin{align*}
+f(u, v) \gets f(u, v) + \Delta f, \quad r(u, v) \gets r(u, v) - \Delta f \\
+f(v, u) \gets f(v, u) - \Delta f, \quad r(v, u) \gets r(v, u) + \Delta f \\
+\end{align*} \]
+</li></ul></div></div></section><!DOCTYPE html><section data-markdown><script type="text/template">## 邊的存法
+
+\\( f, c, r \\) 知其二則剩下一個也可以推出。
+
+其實可能只要記 \\( r \\) 就好。
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 結論
+
+不斷的找路徑擴充流量，直到剩餘網路沒有  
+\\( s \leadsto t \\) 的路徑，就是最大流！
+
+
+  </script></section></section><section><!DOCTYPE html><section><h1>實作</h1><p>我們先進行一段 C++ Coding 宣導。</p></section><!DOCTYPE html><section data-markdown><script type="text/template">## 邊的表示
+
+寫個 ``struct``
+
+```
+struct Edge {
+  int u, v, f, c;
+};
+
+Edge e = {1, 2, 3, 4};
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## pair
+
+```
+typedef pair<int, int> Edge;
+Edge e = {1, 2};
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 存很多邊
+
+寫鍊表
+
+或是用 ``vector``
+
+``` cpp
+vector<Edge> E[VMAX];
+// u -> v
+E[u].PB({v, 1, 2});
+// u <-> v
+E[u].PB({v, 1, 2});
+E[v].PB({u, 1, 2});
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## 反邊
+
+Flow 我們會需要查反邊
+
+``` cpp
+vector<Edge> E[VMAX];
+
+#define SZ(a) ((int)(a).size())
+
+E[u].PB({v, 1, 2, SZ(E[v])  });
+E[v].PB({u, 1, 2, SZ(E[u])-1});
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Auto
+
+C++11 以上
+
+``` cpp
+vector<Edge>::iterator it = E[v].begin();
+
+auto it = E[v].begin();
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Iterate-for
+
+C++11 以上
+
+``` cpp
+for (auto it=E[v].begin(); it!=E[v].end(); it++) {
+    int u = *it.u;
+}
+
+for (auto u: E[v]) {
+}
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Bits/stdc++
+
+G++ only
+
+``` cpp
+#include <bits/stdc++.h>
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Initialize
+
+``` cpp
+int a[5] = {0};
+int a[5] = {};
+
+int a[5] = {1, 2, 3}; // 1, 2, 3, 0, 0
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Lambda function
+
+``` cpp
+bool cmp(int i, int j) {
+    return i > j;
+}
+sort(vector.begin(), vector.end(), cmp);
+
+sort(vector.begin(), vector.end(), [](int i, int j) -> bool {
+    return i > j;
+});
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Compare
+
+``` cpp
+bool cmp(Edge e1, Edge e2) {
+    if (e1.u != e2.u) {
+        return e1.u < e2.u;
+    }
+    return e1.v < e2.v;
+}
+
+bool cmp(Edge e1, Edge e2) {
+    return tie(e1.u, e1.v) < tie(e2.u, e2.v);
+    // Or
+    return make_tuple(e1.u, e1.v) < make_tuple(e2.u, e2.v);
+}
+```
+</script></section><!DOCTYPE html><section data-markdown><script type="text/template">## Tie
+
+``` cpp
+tuple<int, int, int> t = {1, 2, 3};
+int a, b, c;
+tie(a, b, c) = t;
+```</script></section></section><section><!DOCTYPE html><section><h2>Ford-Fulkerson Algorithm</h2><pre><code class="cpp">int f = 0
+while (tf = find_path()) {
+    f += tf;
+}
+return f;
+</code></pre></section><!DOCTYPE html><section><pre><code class="cpp">int find_path(int u = S, int curf = INF) {
+    if (u == T) return curf; // Done!
+
+    for (auto &e: E[u]) {
+        int v = e.dest, f = e.f, tf;
+        if (tf = find_path(v, min(curf, f))) {
+           auto rev = e.rev;
+           e.f -= tf; 
+           ref.f += tf;
+           return tf;
+        }
+    }
+    return 0;
+}
+</code></pre></section><!DOCTYPE html><section><h2>複雜度</h2><p class="fragment">沒有保證！</p><p class="fragment">在流量是整數的時候，每次流量至少增加 \( 1 \)，  <br>
+複雜度 \( \ord{E \abs{f}} \)。</p></section></section><section><!DOCTYPE html><section><h2>Edmonds-Karp Algorithm</h2><pre><code data-noescape class="cpp">int f = 0
+while (tf = find_<span class="fragment highlight-red">shortest</span>_path()) {
+    f += tf;
+}
+return f;
+</code></pre><p>有差嗎？</p></section><!DOCTYPE html><section><p>只差在 Edmonds-Karp 每次規定找最短的一條擴充路徑。</p><p class="fragment">差多少呢？</p><p class="fragment">差非常多！ 複雜度變成 \( \ord{V E^2} \)<br>不但跟流量大小無關，無理數也會 work ！</p></section><!DOCTYPE html><section><h3>Proof</h3><div class="theorem"><div class="label">定理</div><hr/>令 \( d(u) \) 表示 \( s \leadsto u \) 的最短距離，<br>則 \( s \) 到每個點的距離只會越來越遠，也就是 \( d(u) \) 遞增。</div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>Proof</h3><div class="theorem"><div class="label">定理</div><hr/><ul><li>一次擴充一定會讓一條邊消失在剩餘網路裡。</li><li>每個邊可能會消失/回到剩餘網路裡，但至多 \( V/2 \) 次。</li></ul></div><div class="blackboard"></div></section></section><section><!DOCTYPE html><section><h2>Dinic's Algorithm</h2><p>Edmonds-Karp 的一個小優化。</p></section><!DOCTYPE html><section><p>每次擴充後其實只有一些點的 \( d(v) \) 會變。</p><p class="fragment">一次把所有長度是 \( k \) 的擴充路徑都擴充完。</p></section><!DOCTYPE html><section><p>只差在 Edmonds-Karp 每次規定找最短的一條擴充路徑。</p><p class="fragment">差多少呢？</p><p class="fragment">差非常多！ 複雜度變成 \( \ord{V E^2} \)<br>不但跟流量大小無關，無理數也會 work ！</p></section><!DOCTYPE html><section><h3>Details</h3><div class="blackboard"></div></section><!DOCTYPE html><section><h3>複雜度</h3><p>每次 \( \ord{k E} \)，總共 \( \ord{V^2 E} \)。</p></section></section><section><!DOCTYPE html><section><h1>最大流的一些例題</h1></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>Internet Bandwidth - <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=761">UVa 820</a><hr/>現在有一些機器可以互相傳訊，但兩個機器 \( u, v \) 間會有一個
+傳訊的頻寬上限 \( c(u, v) \) ，問你從機器 \( s \) 傳訊到 \( t \) 的
+最大頻寬是多少？
+</div><p>裸的最大流，BJ4</p></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>不重複的路徑數<hr/>給你一張圖 \( G \) ，請找出最多的 \( u \) 到 \( v \) 的路徑，
+使得在這些路徑沒有重複的點。</div><div class="blackboard"></div></section><!DOCTYPE html><section><h2>一些常見的建模技巧</h2><ul><li class="fragment">點容量限制</li><li class="fragment">多個 \( s, t \)。</li><li class="fragment">無限的容量。</li></ul><div class="blackboard"></div></section><!DOCTYPE html><section><h2>二分圖匹配</h2><div class="prob"><div class="label">例題</div>二分圖匹配<hr/>給你一個二分圖，求他最大的一個匹配</div><p class="fragment">我們先說一下定義</p><ul><li class="fragment">二分圖</li><li class="fragment">匹配</li></ul></section><!DOCTYPE html><section><h2>應用</h2><p>二分圖匹配有不少應用</p><ul><li class="fragment">分配任務</li><li class="fragment">分發志願序</li><li class="fragment">決定動漫結局</li></ul></section><!DOCTYPE html><section><img src="img/m1.jpg"></section><!DOCTYPE html><section><img src="img/m2.jpg"></section><!DOCTYPE html><section><h3>二分圖轉 Flow</h3><img src="img/flowprob/f1.svg" class="x2"></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>Soldier and Traveling - <a href="http://codeforces.com/problemset/problem/546/E">Codeforces 546 E</a><hr/>給你一張圖 \( G = (V, E) \)，每一點一開始分別有 \( a_i \) 個士兵。
+現在你希望一天後每個點分別有 \( b_i \) 個士兵，但每個士兵
+只能留在原地或是到相鄰的點，問你可不可能？</div><div class="blackboard"></div></section><!DOCTYPE html><section><div class="prob"><div class="label">例題</div>無向圖的歐拉回路<hr/>給你一張混合圖 \( G = (V, E) \)，也就是同時有有向邊和無向邊的圖。
+問你存不存在一條歐拉回路？</div></section><!DOCTYPE html><section><h2>Euler path</h2>一筆畫走完整張圖。</section><!DOCTYPE html><section><h3>Example</h3><img width="60%" src="img/euler.svg"></section><!DOCTYPE html><section><h3>有解的條件</h3><p>觀察一個路徑 \( v_1 \to v_2 \to \cdots \to v_n \)</p><p>每一個中間走到的點 \( +2 \) ，兩端 \( +1 \)。</p><aside class="notes">度數奇偶是關鍵
+</aside></section><!DOCTYPE html><section> <div class="theorem"><div class="label">定理</div>Euler Path 的存在條件<hr/>定義一個 <b> 奇點 </b> 是度數為奇數的點。如果圖連通，有<ul><li class="fragment">一個無向圖有歐拉路徑的條件是其奇點的個數是 \( 0 \) 或 \( 2 \)。</li><li class="fragment">一個無向圖有歐拉迴路的條件是其奇點的個數是 \( 0 \)。</li><li class="fragment">一個有向圖有歐拉路徑的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)， <br/>
+或是除此之外有一個點滿足 \( \deg^+(v) = \deg^-(v) + 1 \)，<br/>
+另一個滿足 \( \deg^+(v) = \deg^-(v) - 1 \)。</li><li class="fragment">一個有向圖有歐拉迴路的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)，</li></ul></div><div class="blackboard"></div></section><!DOCTYPE html><section><h3>重點</h3><p class="fragment">一個有向圖有歐拉迴路的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)，</p><p class="fragment">混合圖呢？</p></section><!DOCTYPE html><section><h3>觀察</h3><p class="fragment">其實就是要把每一個無向邊都定向成有向圖</p><p class="fragment">最後要求每一個點的 \( \deg^+(v) = \deg^-(v) \)。</p><div class="blackboard"></div></section><!DOCTYPE html><section><p class="fragment">令還沒有算無向邊時 \( \delta(v) = \deg^-(v) - \deg^+(v) \)。</p><p class="fragment">如果我們把一個邊定成 \( u \to v \) 後， 
+\( \delta(u) \gets \delta(u) - 1, \delta(v) \gets \delta(v) + 1 \)。</p><p class="fragment">可以想作一單位的 $\delta$ 從 \( u \) 流到了 \( v \)。</p><div class="blackboard"></div></section><!DOCTYPE html><section><p class="fragment">對於那些 \( \delta(v) > 0 \) 的，也就是需要流出 \( \delta(v) \)
+的，我們就建 \( s \to v \)。</p><p class="fragment">對於那些 \( \delta(v) < 0 \) 的，同理建 \( v \to t \)。</p><p class="fragment">可以補好補滿 \( \iff \abs{f} = \sum_{\delta(v) > 0} \delta(v) \)</p><div class="blackboard"></div></section></section></div></div><script src="js/jquery.js"></script><script src="reveal/lib/js/head.min.js"></script><script src="reveal/js/reveal.js"></script><script src="js/sketch.min.js"></script><script>// Full list of configuration options available at:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
   controls: true,

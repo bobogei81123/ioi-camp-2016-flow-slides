@@ -1,0 +1,11 @@
+\tikzset{every node/.style={white, thick}}
+\tikzset{vertex/.style={white, circle, draw, thick, minimum size=.8cm}}
+\tikzset{source/.style={vertex, double=red!60!black, thick, double distance=2pt}}
+\tikzset{sink/.style={vertex, double=blue!60!black, thick, double distance=2pt}}
+\tikzset{every path/.style={white, draw, very thick}}
+\tikzset{fed/.style={white, draw, -latex, thick}}
+\tikzset{%
+  apply style/.code={%
+    \tikzset{#1}%
+  }
+}
