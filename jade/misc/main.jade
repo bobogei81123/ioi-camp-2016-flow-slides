@@ -12,6 +12,8 @@ section
 
     .blackboard
 
+    +n 講一下導出子圖，畫個圖舉例
+
   +slide
     h3 思路
     p.fragment 二分搜答案，假設最大密度為 \( k \)。
@@ -29,6 +31,10 @@ section
 
     p.fragment 分兩類問題！
     .blackboard
+
+    +n.
+      cost : 2k - deg
+      sum 1 = 選 v 不選 u 就 1 cost
 
   +slide
     +problem({name: '最大逆序密度子序列'}).
@@ -49,6 +55,7 @@ section
   +slide
     p 如果有一個路徑 \( v_1 \to v_2 \to v_3 \cdots \)
     | 就是 \( \texttt{next}(v_1) = v_2, \texttt{next}(v_2) = v_3 \)
+    p.fragment 匹配！
 
     .blackboard
 
@@ -109,8 +116,12 @@ section
     h3 二分圖的特性
     p \( M(G) = C_v(G) \)
     p.fragment 把點覆蓋轉成 min-cut ！
+    p.fragment 很不一樣的是這次在 s 表示 (v in X and 不選 v) or (v in Y and 選 v)
 
     .blackboard
+
+    +n.
+      從構造的思路開始，要 u -> v 不能同時不選 = 不選 v 就要選 u
 
 
 

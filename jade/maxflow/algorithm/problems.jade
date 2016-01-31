@@ -15,9 +15,12 @@ section
   +slide
     +problem({name: '不重複的路徑數'})
       | 給你一張圖 \( G \) ，請找出最多的 \( u \) 到 \( v \) 的路徑，
-      | 使得在這些路徑沒有重複的點。
+      | 使得在這些路徑沒有重複的邊。
 
     .blackboard
+
+    +n.
+      把一條路徑想成是一條流
 
   +slide
     h2 一些常見的建模技巧
@@ -29,6 +32,11 @@ section
 
     .blackboard
 
+    +n.
+      * 點容量 => 拆成 v v'
+      * 多st => 加 ss tt
+      * infty => 用很大的數字
+
   +slide
     h2 二分圖匹配
     +problem({name: '二分圖匹配'})
@@ -39,6 +47,10 @@ section
       li.fragment 二分圖
       li.fragment 匹配
 
+    +n.
+      * 可以分成兩團的圖
+      * 選一些不相交的邊
+
   +slide
     h2 應用
 
@@ -48,8 +60,18 @@ section
       li.fragment 分發志願序
       li.fragment 決定動漫結局
 
+    +n.
+      * IOI 講師每個人想教哪些，一個課至多一個人
+      * 每個人填志願
+
   +slide
     img(src="img/m1.jpg")
+    +n.
+      * 某部動畫  
+      * 線就是 x 喜歡 y
+      * 是二分圖 男/女
+      * 有同性xx 會變一般圖 難做
+      * 求他的一個最大匹配
 
   +slide
     img(src="img/m2.jpg")
@@ -57,6 +79,11 @@ section
   +slide
     h3 二分圖轉 Flow
     img.x2(src="img/flowprob/f1.svg")
+
+    +n.
+      * 上面的人全接一條 s -> u
+      * 下面的人全接一條 u -> t
+      * 用 s-u u-t 容量 1 來限制
     
   +slide
     +problem({name: 'Soldier and Traveling', src: 'Codeforces 546 E', 
@@ -67,10 +94,17 @@ section
 
     .blackboard
 
+    +n.
+      * 把每一個人想做是一單位的流
+      * 一個點可以補幾單位到附進的點？
+
   +slide
     +problem({name: '無向圖的歐拉回路'})
       | 給你一張混合圖 \( G = (V, E) \)，也就是同時有有向邊和無向邊的圖。
       | 問你存不存在一條歐拉回路？
+
+    +n.
+      * 講混合圖定義
 
   +slide
     h2 Euler path
@@ -109,11 +143,17 @@ section
     p.fragment 一個有向圖有歐拉迴路的條件是所有點都滿足 \( \deg^+(v) = \deg^-(v) \)，
     p.fragment 混合圖呢？
 
+    +n.
+      進來 = 出去，合理。
+
   +slide
     h3 觀察
     p.fragment 其實就是要把每一個無向邊都定向成有向圖
     p.fragment 最後要求每一個點的 \( \deg^+(v) = \deg^-(v) \)。
     .blackboard
+
+    +n.
+      * 一個無向邊最後只會走某一個方向
 
   +slide
     p.fragment 令還沒有算無向邊時 \( \delta(v) = \deg^-(v) - \deg^+(v) \)。
@@ -122,6 +162,9 @@ section
     p.fragment 可以想作一單位的 $\delta$ 從 \( u \) 流到了 \( v \)。
     .blackboard
 
+    +n.
+      目標： delta(v) = 0
+
   +slide
     p.fragment 對於那些 \( \delta(v) > 0 \) 的，也就是需要流出 \( \delta(v) \)
       | 的，我們就建 \( s \to v \)。
@@ -129,5 +172,6 @@ section
     p.fragment 可以補好補滿 \( \iff \abs{f} = \sum_{\delta(v) > 0} \delta(v) \)
     .blackboard
 
-      
+    +n.
+      * 要吐流量出來的，就塞一堆水給他。
 

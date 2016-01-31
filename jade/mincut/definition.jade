@@ -22,6 +22,12 @@ section
       b  最小割
       |  就是最小的一個割。
 
+    +n.
+      重點
+      * s \in S, t \in T
+      * 算 S->T 的流量合
+      * 不算 T -> S
+
   +slide
     p 而最大流的對偶問題正是最小割。
 
@@ -30,6 +36,11 @@ section
 
     img.x2.space-right(src="img/mincut/f1-0.svg")
     img(width="43.2%" src="img/mincut/f1-1.svg")
+
+    +n.
+      他們大小相同  
+      注意到有多組解,
+      3, 1 換 v5->t 也行
 
   +slide
     +theorem({name: "Max-flow min-cut theorem"})
@@ -40,6 +51,9 @@ section
         li \( \abs{f} = \abs{C} \)，其中 \( C \) 是最小 s-t 割。
 
     p (1) \( \implies \) (2) 前面講過。
+
+    +n.
+      如果有路徑 可以增加流量。反方向沒有證
 
   +slide
     h3 截流引理
@@ -52,15 +66,23 @@ section
       | 則 \( \abs{f(S, T)} = \abs{f} \) 。
     .blackboard
 
+    +n.
+      * 想像電流，各截面相同。
+      * 證明：一個一個點加進去。
+
   +slide
     h3 (2) \( \implies \) (3)
     p.fragment 找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
       | 其他點就是 \( T \)。
+    p.fragment \( t \) 不在 \(S\) 中。
+    p.fragment 這個 cut 上的邊都要流滿，否則有路徑。
+    p.fragment \( C \leq \abs{f} \)
+    .blackboard
 
   +slide
-    h3 (3) \( \implies \) (1)
-    p.fragment 找所有在剩餘網路上， \( s \) 連的到的點，令其為 \( S \)，
-      | 其他點就是 \( T \)。
+    p.fragment 由截流知 \( \abs{f} \leq C \)
+    p.fragment \( \abs{f} = C \)
+    p.fragment (3) \( \implies \) (1) 也證完了。
 
   +slide
     h2 Find a min-cut
